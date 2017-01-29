@@ -3,7 +3,7 @@ Survival Analysis of NFL Running Backs. More info to come. A function of Data Sc
 
 This README file is subject to change.
 
-General idea: Collect data on NFL RBs, career metrics, physical measures, accolade status, (MVP, All-Pro, etc.) and most importantly, whether or not the player in question is indeed retired.
+General idea of our project: Collect data on NFL RBs, career metrics, physical measures, accolade status, (MVP, All-Pro, etc.) and most importantly, whether or not the player in question is indeed retired.
 This is the main challenge of this project. We will need to devise a systematic method of collecting very specific data from a large quantity of pages on the internet. 
 
 We already have access to the following covariate values after a quick piecemeal CSV scrape off of pro-football-reference.com: Year drafted, Round Drafted, Pick number in draft, Position (HB or FB),Age when drafted, Team, Start year, End year (2016 if not retired), AP1 (First Team All-Pro Selections), Pro Bowl selections, Years spent as primary starter for team, Weighted Career Approximate Value (an advanced metric regarding a player's worth, weighing his better seasons more heavily than his worse ones), Games played, Games started, Career Rush Att, Career Rush Yds, Career Rush TD, Career Receptions, Career Receiving Yds, Career Receiving TD, College Team.
@@ -15,5 +15,12 @@ This "extra yard" that we are pursuing in terms of scraping Wikipedia/nflcombine
 I believe this to be a valuable lesson in data science: scraping the internet for data, with **precision.** If we can accomplish this, we should get wasted together, because we will be more or less teaching ourselves how to do this, and this is certainly a marketable skill in the world of data science. It will not be easy, but this is the true challenge of the project. Survival analysis is incredibly easy in comparison.
 
 After the data collection process, we will load the dataset into R to perform analysis, primarily employing the survival library. We will create Kaplan Meier estimates and build a Cox Proportional Hazards model using our dataset. The Cox PH model is unintelligible to a layman in survival analysis but we can present hazard ratios (the output parameters of the model) visually to really wow our readers. We will become very, very familiar with plotting in R and building other visual aids. As time permits, we may build predictive models, or run other analyses which pique our curiousity.
+
+Here is an early version of our abstract, which is also subject to change:
+
+##Abstract 
+
+This project focuses on using basic survival analysis techniques to determine factors influencing career length of NFL running backs, employing Kaplan-Meier esimates and Cox Proportional Hazards modeling procedures with the aid of RStudio and its [survival](https://github.com/cran/survival) library. We present our results in a visually appealing and easily comprehensible manner through the use of (some library in R... IDK yet). Additionally, we also discuss our methods for collecting our data and averting the tedium of manual data entry from the internet by using Python. 
+
 
 Thanks for reading!!!! (-:
