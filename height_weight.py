@@ -44,11 +44,6 @@ print(urlList[91])
 
 # end code block 2
 
-# our code breaks at element 91 -> http://www.pro-football-reference.com/players/C/CoxxMi00.htm
-# this fucker did not have a height and weight listed
-# we need to find a way around this
-# we found one
-
 # begin code block 3
 
 from bs4 import BeautifulSoup
@@ -56,25 +51,21 @@ import requests
 heights = []
 weights = []
 i = 0
-while i < 100: # we are just trying to get it to work on a small scale
-# if it did work it would be -> while i < len(urlList):
-    if i == 91:
-        i += 1 # this takes out the guy with no height or weight. fuck him.
+while i < len(urlList): 
+    if i == 91 or i == 235:
+        i += 1 # this takes out the 2 guys with no height or weight. fuck them.
     baseurl = urlList[i]
     response = requests.get(baseurl)
     content = response.content
     parser = BeautifulSoup(content,'html.parser')
     heights.append(parser.find_all(itemprop = "height")[0].text)
-   # if heights[i] is None:
-   #     heights[i] = 0
-   #     continue
+   
     weights.append(parser.find_all(itemprop = "weight")[0].text)
-   # if weights[i] is None:
-   #     weights[i] = 0
-   #     continue
+
     print(heights, weights)
     i += 1
     
 # end code block 3
 
-
+# current issue: our data frame (referenced by nfl) still contains 1500 players, only 1156 of them have player profiles on pro-football-reference.com
+# need to remove these 1500-1156 = 344 losers from our dataset so we can add columns for height/weight
