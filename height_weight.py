@@ -47,6 +47,7 @@ print(urlList[91])
 # our code breaks at element 91 -> http://www.pro-football-reference.com/players/C/CoxxMi00.htm
 # this fucker did not have a height and weight listed
 # we need to find a way around this
+# we found one
 
 # begin code block 3
 
@@ -57,6 +58,8 @@ weights = []
 i = 0
 while i < 100: # we are just trying to get it to work on a small scale
 # if it did work it would be -> while i < len(urlList):
+    if i == 91:
+        i += 1 # this takes out the guy with no height or weight. fuck him.
     baseurl = urlList[i]
     response = requests.get(baseurl)
     content = response.content
@@ -74,7 +77,4 @@ while i < 100: # we are just trying to get it to work on a small scale
     
 # end code block 3
 
-# you can execute this and watch the list grow before breaking at observation 91...
-# we use the hashtagged out code in an effort to work around observation 91 not returning any data since he doesn't have any
-# it doesnt work
-# pls help
+
