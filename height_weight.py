@@ -9,6 +9,7 @@ nfl = pd.read_csv("nflrb_data.csv")
 nfl.rename(columns={'Unnamed: 4': 'Name'}, inplace=True)
 
 names = nfl.Name
+
 list = []
 for i in names:
     list.append(i)
@@ -51,8 +52,27 @@ while i < len(urlList):
     parser = BeautifulSoup(content,'html.parser')
     heights.append(parser.find_all(itemprop = "height")[0].text)
     weights.append(parser.find_all(itemprop = "weight")[0].text)
+    #print(i)
     i += 1
     
-nfl['Height'] = pd.Series(heights, index=nfl.index)
-nfl['Weight'] = pd.Series(weights, index=nfl.index)
- 
+h = []
+w = []
+d = 0
+while d < len(heights):
+    if d == 91 or d == 235:
+        h.append(0)
+        w.append(0)
+        d += 1
+    feet = heights[d].split("-")[0]
+    inches = heights[d].split("-")[1]
+    feet = int(feet)
+    inches = int(inches)
+    h.append(feet * 12 + inches)
+    wt = weights[d][0:3]
+    w.append(int(wt))
+    d += 1
+
+nfl['Height'] = pd.Series(h, index=nfl.index)
+nfl['Weight'] = pd.Series(w, index=nfl.index)
+
+nfl.to_csv(file_name) # replace file_name with file path to new .csv file
