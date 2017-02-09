@@ -1,0 +1,6 @@
+We used:
+
+Jupyter Notebook for Python 3.x
+Python libraries (BeautifulSoup, numpy, pandas, etc.)
+RStudio
+version numbers? TBA
