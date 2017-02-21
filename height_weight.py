@@ -76,4 +76,4 @@ while d < len(heights):
 nfl['Height'] = pd.Series(h, index=nfl.index)
 nfl['Weight'] = pd.Series(w, index=nfl.index)
 
-nfl.to_csv(file_name) # replace file_name with file path to new .csv file
+nfl.to_csv("nfl.csv") # replace file_name with file path to new .csv file
