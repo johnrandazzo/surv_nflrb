@@ -3,19 +3,18 @@ Survival Analysis of NFL Running Backs. More info to come. A function of Data Sc
 
 This README file is subject to change. Last update 2/20/17.
 
-##Abstract
+# Abstract
 
 This project focuses on using basic survival analysis techniques to determine factors influencing career length of NFL running backs, employing Kaplan-Meier esimates and Cox Proportional Hazards modeling procedures with the aid of RStudio and its [survival](https://github.com/cran/survival) library. We extract data from pro-football-reference.com using .csv files for career statistics and [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/) for physical measurements. Combined with the [pandas](http://pandas.pydata.org/) library, we were able to the excruciating tedium of manual data entry. We present our results in a visually appealing and easily comprehensible manner through the use of [ggplot2](https://github.com/tidyverse/ggplot2).
 
-##Contributors
+# Contributors
 
 * Brian Luu
 * Kevin Wang
 * John Randazzo
 
-##Requirements
+# Requirements
 
-need r python and notepad(TextWrangler)
 Here are the packages you should have installed in Python to ensure this runs smoothly.
 ```
 bs4
@@ -31,9 +30,9 @@ survival
 ggplot2
 ```
 
-##Methodology- Web Scraping
+# Methodology- Web Scraping
 
-# Getting started with the .csv file
+##Getting started with the .csv file
 1. Start by going here (http://www.pro-football-reference.com/draft/) and selecting RB in the drop-down menu for Position.
 2. Next to the "Drafted Players" heading, there is an option labeled "Share & more" which we will click, yielding an option to generate a .csv file that is suitable for Microsoft Excel. This is the compressed data of 300 NFL running backs. You can literally cut and paste this whole file into your text processor, as was originally done. (We use TextWrangler)
 3. To get more, we go to the bottom of the table on the website and click "Next Page" and then repeat step 2 with one caveat: when cutting and pasting the raw data file, omit the first line with all of the columns.
@@ -43,11 +42,11 @@ Yay! We are ready to plug this baby into Python.
 
 Run height_weight.py, making sure that you have all libraries installed in Python. This will take a while...
 
-##Methodology- Analyis
+# Methodology- Analyis
 
 Our analysis will employ the theory of Survival Analysis, which measures survival probability and instantaneous rate of hazard for an event of interest over a given time period. We are interested in the amount of games (our time variable) it takes for an NFL runningback's professional career to end. Thanks to our web scraping process, we now have a large, informative and (somewhat) tidy dataset. We now wish to read these data into R to tidy it further and perform our statistical analysis.
 
-End of update!
+# End of update!
 Here is everything from 2/1/17:
 
 General idea of our project: Collect data on NFL RBs, career metrics, physical measures, accolade status, (MVP, All-Pro, etc.) and most importantly, whether or not the player in question is indeed retired.
