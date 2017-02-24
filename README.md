@@ -1,7 +1,7 @@
 # surv_nflrb
 Survival Analysis of NFL Running Backs. More info to come. A function of Data Science at UCSB.
 
-This README file is subject to change. Last update 2/20/17.
+This README file is subject to change, and is badly fragmented as of this past update. Last update 2/24/17.
 
 # Abstract
 
@@ -28,23 +28,60 @@ In R, so far we have used:
 ```
 survival
 ggplot2
+KMSurv
+Zelig
+simPH
 ```
 
 # Methodology- Web Scraping
 
 ##Getting started with the .csv file
-1. Start by going here (http://www.pro-football-reference.com/draft/) and selecting RB in the drop-down menu for Position.
-2. Next to the "Drafted Players" heading, there is an option labeled "Share & more" which we will click, yielding an option to generate a .csv file that is suitable for Microsoft Excel. This is the compressed data of 300 NFL running backs. You can literally cut and paste this whole file into your text processor, as was originally done. (We use TextWrangler)
-3. To get more, we go to the bottom of the table on the website and click "Next Page" and then repeat step 2 with one caveat: when cutting and pasting the raw data file, omit the first line with all of the columns.
+1. Start by going here (http://www.pro-football-reference.com/draft/) and selecting RB in the drop-down menu for Position. We are deeply grateful to be able to scrape their data without much consequence.
+2. Next to the "Drafted Players" heading, there is an option labeled "Share & more" which we will click, yielding an option to generate a .csv file that is suitable for Microsoft Excel. This is the compressed data of 300 NFL running backs. You can literally cut and paste this whole file into your text processor of choice. (We use TextWrangler)
+3. To get more observations from previous generations of NFL players, we go to the bottom of the table on the website and click "Next Page" and then repeat step 2 with one caveat: when cutting and pasting the raw data file, omit the first line with all of the columns' names.
 4. With Step 3 in mind, repeat Step 2, 4 more times. You should have 1500 observations total.
-5. Save your file as a .csv file and read into Python. We save it as nflrb_data.csv and that is what we use in height_weight.py.
+5. Save your file as a .csv file and read into Python. We save it as nflrb_data.csv and that is the name we use in height_weight.py.
 Yay! We are ready to plug this baby into Python.
 
-Run height_weight.py, making sure that you have all libraries installed in Python. This will take a while...
+Run height_weight.py, making sure that you have all libraries mentioned above installed in your Python environment. This will take a while... in the mean time, why not go outside? 
 
 # Methodology- Analyis
 
-Our analysis will employ the theory of Survival Analysis, which measures survival probability and instantaneous rate of hazard for an event of interest over a given time period. We are interested in the amount of games (our time variable) it takes for an NFL runningback's professional career to end. Thanks to our web scraping process, we now have a large, informative and (somewhat) tidy dataset. We now wish to read these data into R to tidy it further and perform our statistical analysis.
+Our analysis will employ the theory of Survival Analysis, which measures survival probability and instantaneous rate of hazard for an event of interest over a given time period. We are interested in the amount of games (our time variable) it takes for an NFL runningback's professional career to end (our event of interest). Thanks to our web scraping process, we now have a large, informative and (somewhat) tidy dataset. It is now time to read our finished product (nfl.csv) from our Python program into R.
+```
+nfl <- read.csv("filepath/nfl.csv")
+```
+To install necessary packages, use:
+```
+install.packages("package")
+```
+To access the installed package:
+```
+library(package)
+```
+
+# Further Tidying
+As it turns out, our dataset is still a bit on the messy side. We have some measures associated to each player that cannot be of use in survival analysis. We also do not have a variable set to represent our event of interest, retirement. We need to make a few adjustments before we can start our analysis.
+```
+this will come later.
+```
+
+
+
+We are now ready to begin performing survival analysis on NFL running backs. 
+
+# Kaplan-Meier Estimates for Survival Probability
+
+We use the Kaplan-Meier estimate to depict survival probability over time. These are best used when considering the entire subject population's aggregate survival with no additional covariates, or with a few discrete valued covariate levels.
+
+
+# Cox Proportional Hazards Modeling and Building a Hazard Model
+
+
+
+
+
+
 
 # End of update!
 Here is everything from 2/1/17:
