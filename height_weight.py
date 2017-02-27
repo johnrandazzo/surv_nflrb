@@ -1,5 +1,6 @@
 # NFL RB survival analysis, data collection code
 # we are trying to extract each player's height and weight
+# Brian Luu, Kevin Wang, John Randazzo
 
 import pandas as pd
 import string
@@ -18,7 +19,7 @@ nameStore = []
 letterStore = []
 p = 0
 while p < len(list):
-    if ("\\" in list[p]):
+    if ("\\" in list[p]): # checks if player has profile on pro-football-reference.com and stores names of those that do
         nameStore.append(list[p][-8:])
         letterStore.append(list[p][-8])
     p += 1
@@ -41,9 +42,9 @@ import requests
 heights = []
 weights = []
 i = 0
-while i < len(urlList):
-    if i == 91 or i == 235:
-        heights.append(0)
+while i < len(urlList): # note: this will take about 1 second per player. find something fun to do while waiting for this to run
+    if i == 91 or i == 235: # fixes 2 players that have URLs but no height/weight listed
+        heights.append(0)   # we remove these dudes later anyways
         weights.append(0)
         i += 1
     baseurl = urlList[i]
@@ -75,4 +76,4 @@ while d < len(heights):
 nfl['Height'] = pd.Series(h, index=nfl.index)
 nfl['Weight'] = pd.Series(w, index=nfl.index)
 
-nfl.to_csv(file_name) # replace file_name with file path to new .csv file
+nfl.to_csv("nfl.csv") # replace file_name with file path to new .csv file

@@ -1,5 +1,5 @@
 We used:
-
+A text processor/editor of your choice (John used TextWrangler for OS X but it doesn't matter)
 Jupyter Notebook for Python 3.x
 Python libraries (BeautifulSoup, numpy, pandas, etc.)
 RStudio

@@ -1,0 +1,392 @@
+---
+title: "Survival Analysis - NFL RBs"
+author: "John Randazzo"
+date: "2/24/2017"
+output: pdf_document
+---
+
+```{r}
+nfl <- read.csv("/Users/johnrandazzo/Downloads/nfl.csv")
+library(survival)
+library(KMsurv)
+library(ggplot2)
+library(simPH)
+library(flexsurv)
+```
+
+We also make use of the ggsurv function, documented here:
+https://www.r-statistics.com/2013/07/creating-good-looking-survival-curves-the-ggsurv-function/
+
+```{r}
+ggsurv <- function(s, CI = 'def', plot.cens = T, surv.col = 'gg.def',
+                   cens.col = 'red', lty.est = 1, lty.ci = 2,
+                   cens.shape = 3, back.white = F, xlab = 'Time',
+                   ylab = 'Survival', main = ''){
+ 
+  library(ggplot2)
+  strata <- ifelse(is.null(s$strata) ==T, 1, length(s$strata))
+  stopifnot(length(surv.col) == 1 | length(surv.col) == strata)
+  stopifnot(length(lty.est) == 1 | length(lty.est) == strata)
+ 
+  ggsurv.s <- function(s, CI = 'def', plot.cens = T, surv.col = 'gg.def',
+                       cens.col = 'red', lty.est = 1, lty.ci = 2,
+                       cens.shape = 3, back.white = F, xlab = 'Time',
+                       ylab = 'Survival', main = ''){
+ 
+    dat <- data.frame(time = c(0, s$time),
+                      surv = c(1, s$surv),
+                      up = c(1, s$upper),
+                      low = c(1, s$lower),
+                      cens = c(0, s$n.censor))
+    dat.cens <- subset(dat, cens != 0)
+ 
+    col <- ifelse(surv.col == 'gg.def', 'black', surv.col)
+ 
+    pl <- ggplot(dat, aes(x = time, y = surv)) +
+      xlab(xlab) + ylab(ylab) + ggtitle(main) +
+      geom_step(col = col, lty = lty.est)
+ 
+    pl <- if(CI == T | CI == 'def') {
+      pl + geom_step(aes(y = up), color = col, lty = lty.ci) +
+        geom_step(aes(y = low), color = col, lty = lty.ci)
+    } else (pl)
+ 
+    pl <- if(plot.cens == T & length(dat.cens) > 0){
+      pl + geom_point(data = dat.cens, aes(y = surv), shape = cens.shape,
+                       col = cens.col)
+    } else if (plot.cens == T & length(dat.cens) == 0){
+      stop ('There are no censored observations')
+    } else(pl)
+ 
+    pl <- if(back.white == T) {pl + theme_bw()
+    } else (pl)
+    pl
+  }
+ 
+  ggsurv.m <- function(s, CI = 'def', plot.cens = T, surv.col = 'gg.def',
+                       cens.col = 'red', lty.est = 1, lty.ci = 2,
+                       cens.shape = 3, back.white = F, xlab = 'Time',
+                       ylab = 'Survival', main = '') {
+    n <- s$strata
+ 
+    groups <- factor(unlist(strsplit(names
+                                     (s$strata), '='))[seq(2, 2*strata, by = 2)])
+    gr.name <-  unlist(strsplit(names(s$strata), '='))[1]
+    gr.df <- vector('list', strata)
+    ind <- vector('list', strata)
+    n.ind <- c(0,n); n.ind <- cumsum(n.ind)
+    for(i in 1:strata) ind[[i]] <- (n.ind[i]+1):n.ind[i+1]
+ 
+    for(i in 1:strata){
+      gr.df[[i]] <- data.frame(
+        time = c(0, s$time[ ind[[i]] ]),
+        surv = c(1, s$surv[ ind[[i]] ]),
+        up = c(1, s$upper[ ind[[i]] ]),
+        low = c(1, s$lower[ ind[[i]] ]),
+        cens = c(0, s$n.censor[ ind[[i]] ]),
+        group = rep(groups[i], n[i] + 1))
+    }
+ 
+    dat <- do.call(rbind, gr.df)
+    dat.cens <- subset(dat, cens != 0)
+ 
+    pl <- ggplot(dat, aes(x = time, y = surv, group = group)) +
+      xlab(xlab) + ylab(ylab) + ggtitle(main) +
+      geom_step(aes(col = group, lty = group))
+ 
+    col <- if(length(surv.col == 1)){
+      scale_colour_manual(name = gr.name, values = rep(surv.col, strata))
+    } else{
+      scale_colour_manual(name = gr.name, values = surv.col)
+    }
+ 
+    pl <- if(surv.col[1] != 'gg.def'){
+      pl + col
+    } else {pl + scale_colour_discrete(name = gr.name)}
+ 
+    line <- if(length(lty.est) == 1){
+      scale_linetype_manual(name = gr.name, values = rep(lty.est, strata))
+    } else {scale_linetype_manual(name = gr.name, values = lty.est)}
+ 
+    pl <- pl + line
+ 
+    pl <- if(CI == T) {
+      if(length(surv.col) > 1 && length(lty.est) > 1){
+        stop('Either surv.col or lty.est should be of length 1 in order
+             to plot 95% CI with multiple strata')
+      }else if((length(surv.col) > 1 | surv.col == 'gg.def')[1]){
+        pl + geom_step(aes(y = up, color = group), lty = lty.ci) +
+          geom_step(aes(y = low, color = group), lty = lty.ci)
+      } else{pl +  geom_step(aes(y = up, lty = group), col = surv.col) +
+               geom_step(aes(y = low,lty = group), col = surv.col)}
+    } else {pl}
+ 
+ 
+    pl <- if(plot.cens == T & length(dat.cens) > 0){
+      pl + geom_point(data = dat.cens, aes(y = surv), shape = cens.shape,
+                      col = cens.col)
+    } else if (plot.cens == T & length(dat.cens) == 0){
+      stop ('There are no censored observations')
+    } else(pl)
+ 
+    pl <- if(back.white == T) {pl + theme_bw()
+    } else (pl)
+    pl
+  }
+  pl <- if(strata == 1) {ggsurv.s(s, CI , plot.cens, surv.col ,
+                                  cens.col, lty.est, lty.ci,
+                                  cens.shape, back.white, xlab,
+                                  ylab, main)
+  } else {ggsurv.m(s, CI, plot.cens, surv.col ,
+                   cens.col, lty.est, lty.ci,
+                   cens.shape, back.white, xlab,
+                   ylab, main)}
+  pl
+}
+```
+
+Tidying up:
+
+```{r}
+nfl$Rk <- NULL
+nfl$College.Univ <- NULL
+nfl$Unnamed..23 <- NULL
+nfl$RecYds <- nfl$Yds.1
+nfl$RecTD <- nfl$TD.1
+nfl$Yds.1 <- NULL
+nfl$TD.1 <- NULL
+nfl$Retired <- ifelse(nfl$To == 2016, 0, 1)
+nfl[is.na(nfl)] <- 0
+nfl <- nfl[!nfl$From == 0,]
+nfl <- nfl[!nfl$Weight == 0,]
+
+```
+
+A few averages:
+
+```{r}
+nfl$YPC <- nfl$Yds / nfl$Att
+nfl$YPRec <- nfl$RecYds / nfl$Rec
+nfl$Years <- nfl$To - nfl$From
+nfl$Years <- ifelse(nfl$Years == 0, 1, nfl$Years)
+nfl$PB.1 <- ifelse(nfl$PB >= 1, 1, 0) #binary predictor
+nfl$AP1.1 <- ifelse(nfl$AP1 >= 1, 1, 0)
+nfl$BMI <- (nfl$Weight / (nfl$Height * nfl$Height)) * 703
+nfl$BMI.cat <- ifelse(nfl$BMI >= median(nfl$BMI), 1, 0)
+```
+
+##A little bit about censoring moving forward
+From https://www.stat.ubc.ca/~rollin/teach/643w04/lec/node69.html
+
+"First and foremost is the issue of non-informative censoring. To satisfy this assumption, the design of the underlying study must ensure that the mechanisms giving rise to censoring of individual subjects are not related to the probability of an event occurring...Violation of this assumption can invalidate just about any sort of survival analysis, from Kaplan-Meier estimation to the Cox model."
+
+The value of our event of interest (retirement: 0 for Not Retired (still active in NFL today) and 1 for Retired) is directly related to when the player enters the league. If we move forward with the analysis including these censored observations, we will confound our results, and even worse, we will violate a key assumption of survival analysis. Data values for a player that is still in the NFL will not yield any information for our purposes of estimating the effects of certain covariates on time to retirement. Therefore, we will throw out all currently active players from our data set. Now, we have no censored observations.  
+
+##Kaplan-Meier Estimates:
+
+```{r, include = FALSE}
+nfl.fit <- survfit(Surv(G,Retired)~1,data = nfl)
+plot(nfl.fit)
+
+km.pb <- survfit(Surv(G,Retired)~PB.1, data = nfl)
+plot(km.pb)
+
+km.ap <- survfit(Surv(G,Retired)~AP1.1, data = nfl)
+plot(km.ap)
+
+nfl <- nfl[!nfl$DrAge == 26,]
+nfl <- nfl[!nfl$DrAge == 25,]
+nfl <- nfl[!nfl$DrAge == 20,]
+km.age <- survfit(Surv(G,Retired)~DrAge, data = nfl)
+plot(km.age)
+
+quantile(nfl$BMI)
+nfl$bmi.cat[nfl$BMI <= 28.04896] <- 0
+nfl$bmi.cat[nfl$BMI > 28.04896 & nfl$BMI <= 31.00819] <- 1
+nfl$bmi.cat[nfl$BMI > 31.00819] <- 2
+km.bmi <- survfit(Surv(G,Retired)~bmi.cat, data = nfl)
+plot(km.bmi)
+
+```
+
+##GGSurv:
+
+```{r, include = FALSE}
+ggsurv(km.bmi)
+ggsurv(km.age)
+ggsurv(km.ap)
+ggsurv(km.pb)
+```
+
+
+
+
+
+##A little bit about censoring moving forward
+From https://www.stat.ubc.ca/~rollin/teach/643w04/lec/node69.html
+
+"First and foremost is the issue of non-informative censoring. To satisfy this assumption, the design of the underlying study must ensure that the mechanisms giving rise to censoring of individual subjects are not related to the probability of an event occurring...Violation of this assumption can invalidate just about any sort of survival analysis, from Kaplan-Meier estimation to the Cox model."
+
+The value of our event of interest (retirement: 0 for Not Retired (still active in NFL today) and 1 for Retired) is directly related to when the player enters the league. If we move forward with the analysis including these censored observations, we will confound our results, and even worse, we will violate a key assumption of survival analysis. Data values for a player that is still in the NFL will not yield any information for our purposes of estimating the effects of certain covariates on time to retirement. Therefore, we will throw out all currently active players from our data set. Now, we have no censored observations.  
+
+```{r}
+nfl.ret <- nfl[!nfl$Retired == 0,]
+
+nfl.fit.ret <- survfit(Surv(G,Retired)~1,data = nfl.ret)
+
+
+km.pb.ret <- survfit(Surv(G,Retired)~PB.1, data = nfl.ret)
+
+
+km.ap.ret <- survfit(Surv(G,Retired)~AP1.1, data = nfl.ret)
+
+
+km.age.ret <- survfit(Surv(G,Retired)~DrAge, data = nfl.ret)
+
+
+km.bmi.ret <- survfit(Surv(G,Retired)~bmi.cat, data = nfl.ret)
+
+
+ggsurv(nfl.fit.ret)
+ggsurv(km.bmi.ret)
+ggsurv(km.age.ret)
+ggsurv(km.ap.ret)
+ggsurv(km.pb.ret)
+```
+
+##Cox Models:
+
+```{r}
+
+bmi.cox <- coxph(Surv(G,Retired)~BMI, data = nfl.ret)
+summary(bmi.cox)
+cox.zph(bmi.cox)
+
+ypc.cox <- coxph(Surv(G,Retired)~YPC, data = nfl.ret)
+summary(ypc.cox)
+cox.zph(ypc.cox)
+
+age.cox <- coxph(Surv(G,Retired)~DrAge, data = nfl.ret)
+summary(age.cox)
+cox.zph(age.cox)
+
+
+big.cox <- coxph(Surv(G,Retired)~BMI+YPC+DrAge, data = nfl.ret)
+big.cox
+cox.zph(big.cox)
+
+csl.only.bmi <- coxsimLinear(big.cox, b = "BMI", Xj = seq(23.84,37.4,by = .1))
+
+simGG(csl.only.bmi)
+
+csl.only.ypc <- coxsimLinear(big.cox, b = "YPC", Xj = seq(0,5,by = .1))
+
+simGG(csl.only.ypc)
+
+csl.only.drage <- coxsimLinear(big.cox, b = "DrAge", Xj = seq(21,24, by = 1))
+
+simGG(csl.only.drage)
+```
+
+##Stratified Models:
+
+```{r}
+#stratify pro bowl
+pb.cox <- coxph(Surv(G,Retired)~strata(PB)+DrAge+BMI+YPC, data = nfl.ret)
+summary(pb.cox)
+cox.zph(pb.cox)
+
+#stratify all pro
+ap1.cox <- coxph(Surv(G,Retired)~strata(AP1.1)+DrAge+BMI+YPC, data = nfl.ret)
+summary(ap1.cox)
+cox.zph(ap1.cox)
+
+```
+
+We are intrigued by the change in these results. To investigate further, we perform a couple quick analyses consisting of pro-bowlers and all-pro players:
+
+```{r}
+nfl.pb <- nfl.ret[nfl.ret$PB.1 > 0,]
+nfl.ap <- nfl.ret[nfl.ret$AP1.1 > 0,]
+pb.ap.km <- survfit(Surv(G,Retired)~AP1.1, data = nfl.pb)
+ggsurv(pb.ap.km, main = "All-Pro vs Not All-Pro, Amongst Pro-Bowlers")
+ap.pb.km <- survfit(Surv(G,Retired)~PB.1, data = nfl.ap)
+ggsurv(ap.pb.km, main = "Pro-Bowl vs Not Pro-Bowl, Amongst All-Pros")
+```
+
+As can be seen, the second plot is incomplete. This is because All-Pro status seems to generally imply being a Pro-Bowler as well, while the converse is not supported.
+
+```{r}
+pb.only.cox <- coxph(Surv(G,Retired)~BMI+YPC+DrAge, data = nfl.pb)
+pb.only.cox
+cox.zph(pb.only.cox)
+ap.only.cox <- coxph(Surv(G,Retired)~BMI+YPC+DrAge, data = nfl.ap)
+ap.only.cox
+cox.zph(ap.only.cox)
+```
+
+All-Pro selections and Pro-Bowl selections are both prime indicators that a player is very good, which implies that they will remain in the league for a long time. However, there is a subtle yet significant distinction between the two: NFL fans vote for Pro-Bowl selections, while the Associated Press selects the All-Pro teams.
+We take it by faith that the the selection of the All-Pro teams under the auspices of the AP is more indicative of higher player quality than the Pro Bowl selections made by the highly biased fans of the NFL. 
+In terms of our analysis, we find that being an All-Pro is certainly more meaningful than being named to the Pro-Bowl.
+But how much more meaningful is it?
+To find out, we take a subset of the data consisting of all players who ever had a pro-bowl selection. 
+We then make a Cox Model to assess the effect of All-Pro selections compared to a player who had Pro-Bowl selections, but not All-Pro selections.
+
+```{r}
+cox.ap.v.pb <- coxph(Surv(G,Retired)~AP1, data = nfl.pb)
+cox.ap.v.pb
+cox.zph(cox.ap.v.pb)
+csl.ap.pb <- coxsimLinear(cox.ap.v.pb, b = "AP1", Xj = seq(0,6, by = 1))
+
+simGG(csl.ap.pb)
+```
+
+Although this model passes the test for the proportional hazards assumption, there is lingering suspicion that the number of All-Pro selections is inherently time-dependent. Because of this and the small number of 2-year, 3-year, etc. All-Pro runningbacks, we categorize the All-Pro selection values to compensate for the variation in number of All-Pro selections. Therefore we use a binary measure: 0 for never an All-Pro, and 1 for at least one All-Pro selection.
+
+```{r}
+km.fuck <- survfit(Surv(G,Retired)~AP1.1, data = nfl.pb)
+plot(km.fuck, fun = "cloglog")
+cox.ap.mod.v.pb <- coxph(Surv(G,Retired)~AP1.1, data = nfl.pb)
+cox.ap.mod.v.pb
+cox.zph(cox.ap.mod.v.pb)
+
+csl.ap.mod.pb <- coxsimLinear(cox.ap.mod.v.pb, b = "AP1.1", Xj = seq(0,1, by = 1))
+
+simGG(csl.ap.mod.pb)
+```
+
+```{r}
+quantile(nfl.pb$AP1)
+
+quantile(nfl.ap$PB)
+```
+
+Clearly, All-Pro selection trumps Pro-Bowl selections in terms of denoting a player's elevated skill level. 
+
+
+Parametric models:
+
+```{r}
+nfl.fit.ret <- survfit(Surv(G,Retired)~1,data = nfl.ret)
+f1 <- flexsurvreg(Surv(G,Retired)~1,data = nfl.ret, dist = "gengamma")
+f1
+plot(f1, xlab = "Games Played", ylab = "Survival Probability", main = "Generalized Gamma fitted to Kaplan-Meier Estimate")
+```
+
+We are impressed with the goodness of this fit. Our parameters for the distribution were estimated to be:
+(mu = 4.3805, sigma = .7168, Q = 1.694)
+More on the Generalized Gamma distribution can be found here:
+https://en.wikipedia.org/wiki/Generalized_gamma_distribution
+
+
+```{r}
+#idk about this shit
+ggsurv(nfl.fit.ret)
+x <- dgengamma(x = seq(1,239,by=1), mu = 4.3805, sigma = .7168, Q = 1.694)
+den <- density(x)
+den
+dat <- data.frame(x = den$x, y = den$y)
+ggplot(data = dat, aes(x = x, y = y))
+#gompertz, gengamma, weibull
+#gengamma(mu = 4.3805, sigma = .7168, Q = 1.694) is winrar
+```
