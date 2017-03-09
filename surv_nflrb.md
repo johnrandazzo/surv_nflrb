@@ -314,20 +314,12 @@ players:
 
     nfl.pb <- nfl.ret[nfl.ret$PB.1 > 0,]
     nfl.ap <- nfl.ret[nfl.ret$AP1.1 > 0,]
-    pb.ap.km <- survfit(Surv(G,Retired)~AP1.1, data = nfl.pb)
-    ggsurv(pb.ap.km, main = "All-Pro vs Not All-Pro, Amongst Pro-Bowlers")
 
-![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-13-1.png)
+![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-14-1.png)![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-14-2.png)
 
-    ap.pb.km <- survfit(Surv(G,Retired)~PB.1, data = nfl.ap)
-    ggsurv(ap.pb.km, main = "Pro-Bowl vs Not Pro-Bowl, Amongst All-Pros")
-
-![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-13-2.png)
-
-As can be seen, the second plot is incomplete. This is because All-Pro
-status seems to imply being a Pro-Bowler as well, while the converse is
-not supported. Generally, an All-Pro will not go long without being
-selected to a Pro-Bowl.
+The second plot is incomplete. We find that All-Pro status seems to
+imply being a Pro-Bowler as well. Generally, an All-Pro will not go long
+without being selected to a Pro-Bowl.
 
     pb.only.cox <- coxph(Surv(G,Retired)~BMI+YPC+DrAge, data = nfl.pb)
     pb.only.cox
@@ -375,18 +367,17 @@ selected to a Pro-Bowl.
 
 All-Pro selections and Pro-Bowl selections are both prime indicators
 that a player is very good, which implies that they will remain in the
-league for a long time. However, there is a subtle yet significant
-distinction between the two: NFL fans vote for Pro-Bowl selections,
+league for a long time. However, NFL fans vote for Pro-Bowl selections,
 while the Associated Press selects the All-Pro teams. We take it by
-faith that the the selection of the All-Pro teams under the auspices of
-the AP is more indicative of higher player quality than the Pro Bowl
-selections made by the highly biased fans of the NFL. In terms of our
-analysis, we find that being an All-Pro is certainly more meaningful
-than being named to the Pro-Bowl. But how much more meaningful is it? To
-find out, we take a subset of the data consisting of all players who
-ever had a pro-bowl selection. We then make a Cox Model to assess the
-effect of All-Pro selections compared to a player who had Pro-Bowl
-selections, but not All-Pro selections.
+faith that the All-Pro teams selected under the auspices of the AP is
+more indicative of higher player quality than the Pro Bowl selections
+made by the *slightly* biased fans of the NFL. In terms of our analysis,
+we find that being an All-Pro is certainly more meaningful than being
+named to the Pro-Bowl. But how much more meaningful is it? To find out,
+we take a subset of the data consisting of all players who ever had a
+pro-bowl selection. We then make a Cox Model to assess the effect of
+All-Pro selections compared to a player who had Pro-Bowl selections, but
+not All-Pro selections.
 
     cox.ap.v.pb <- coxph(Surv(G,Retired)~AP1, data = nfl.pb)
     cox.ap.v.pb
@@ -411,7 +402,7 @@ selections, but not All-Pro selections.
 
     simGG(csl.ap.pb)
 
-![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-15-1.png)
+![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-16-1.png)
 
 Although this model passes the test for the proportional hazards
 assumption, there is lingering suspicion that the number of All-Pro
@@ -444,7 +435,7 @@ All-Pro, and 1 for at least one All-Pro selection.
 
     simGG(csl.ap.mod.pb)
 
-![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-16-1.png)
+![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-17-1.png)
 
 Clearly, All-Pro selection trumps Pro-Bowl selections in terms of
 predicting a runningback's longevity.
@@ -474,11 +465,13 @@ We can fit a parametric distribution to our survival curve. Observe:
 
     plot(f1, xlab = "Games Played", ylab = "Survival Probability", main = "Generalized Gamma fitted to Kaplan-Meier Estimate")
 
-![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-18-1.png)
+![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-19-1.png)
 
 We are impressed by the goodness of this fit. Our parameters for the
 distribution were estimated to be: (mu = 4.3805, sigma = .7168, Q =
-1.694) More on the Generalized Gamma distribution can be found here:
+1.694)
+
+More on the Generalized Gamma distribution can be found here:
 <https://en.wikipedia.org/wiki/Generalized_gamma_distribution>
 
 Summary and Resources
@@ -566,14 +559,26 @@ Key Results (to be edited)
 
 4.  Yards per carry is also very significant. As an average measure, it
     is a prime indicator of how *good* an NFL RB is in their career. Of
-    course, players with higher YPC can be expected to last longer in
-    the league.
+    course, players with higher YPC can be expected to have lasted
+    longer in the league.
 
 5.  All-Pro and Pro-Bowl status are also indicators of a player's
     quality of play through their career. Perhaps trivially, players
     with these accolades lasted longer than those who never
     acheived them. Furthermore, we found that All-Pro was a
     significantly better predictor of career longevity than Pro-Bowl.
+
+What needs to be done:
+----------------------
+
+*Include lowdown on theory behind surv analysis, KM estimates, cox
+model, stratified model *Make it neat and visually appealing to layman
+viewers; need lots of plots and visualizations that are understandable,
+labeled perfectly *Find some more results; our current ones are pretty
+underwhelming *Fumbles? more web scraping \*better visualization of
+relative risk in cox model: the plots are shit
+
+[](https://raw.githubusercontent.com/johnrandazzo/surv_nflrb/markdown/figure-markdown_strict/unnamed-chunk-10-1.png)
 
 Acknowledgments
 ---------------
