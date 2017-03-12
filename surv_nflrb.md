@@ -199,6 +199,9 @@ desired.
 
 <img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/unnamed-chunk-9-2.png' >
 
+Note: bmi.cat is as follows: 0 for bottom 25th percentile, 1 for middle
+50%, 2 for top 25%
+
 <img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/unnamed-chunk-9-3.png' >
 
 <img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/unnamed-chunk-9-4.png' >
@@ -337,6 +340,10 @@ players:
     nfl.ap <- nfl.ret[nfl.ret$AP1.1 > 0,]
 
 ![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-14-1.png)![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-14-2.png)
+
+<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/unnamed-chunk-12-1.png' >
+
+<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/unnamed-chunk-12-2.png' >
 
 The second plot is incomplete. We find that All-Pro status seems to
 imply being a Pro-Bowler as well. Generally, an All-Pro will not go long
