@@ -8,11 +8,11 @@ procedures with the aid of RStudio and its
 [survival](https://github.com/cran/survival) library. We extract data
 from pro-football-reference.com using .csv files for career statistics
 and [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/) for
-physical measurements. Combined with the
-[pandas](http://pandas.pydata.org/) library, we were able to the
-excruciating tedium of manual data entry. We present our results in a
+physical measurements and maintain our dataset using
+[pandas](http://pandas.pydata.org/). We present our results in a
 visually appealing and easily comprehensible manner through the use of
-[ggplot2](https://github.com/tidyverse/ggplot2).
+[ggplot2](https://github.com/tidyverse/ggplot2), in addition to other R
+libraries employed for analytical purposes.
 
 Contributors
 ------------
@@ -49,6 +49,7 @@ We also make use of the ggsurv funtion, documented here:
 Motivation
 ==========
 
+## Runningbacks don't last very long in the NFL
 <img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/giphy-downsized.gif' >
 
 <img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/giphy-tumblr.gif' >
