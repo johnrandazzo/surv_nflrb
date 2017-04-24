@@ -46,6 +46,15 @@ In R, these packages need to be installed:
 We also make use of the ggsurv funtion, documented here:
 <https://www.r-statistics.com/2013/07/creating-good-looking-survival-curves-the-ggsurv-function/>
 
+Motivation
+==========
+
+<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/giphy-downsized.gif' >
+
+<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/giphy-tumblr.gif' >
+
+<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/statistic_id240102_average-length-of-player-careers-in-the-nfl.png' >
+
 Methodology- Web Scraping
 =========================
 
@@ -191,16 +200,6 @@ survival plots:
 
 ![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-10-1.png)![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-10-2.png)![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-10-3.png)![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-10-4.png)![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-10-5.png)
 
-<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/unnamed-chunk-9-1.png' >
-
-<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/unnamed-chunk-9-2.png' >
-
-<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/unnamed-chunk-9-3.png' >
-
-<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/unnamed-chunk-9-4.png' >
-
-<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/unnamed-chunk-9-5.png' >
-
 Cox Models:
 -----------
 
@@ -286,10 +285,6 @@ playing career.
 
 ![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-15-1.png)![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-15-2.png)
 
-<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/unnamed-chunk-12-1.png' >
-
-<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/unnamed-chunk-12-2.png' >
-
 The second plot is incomplete. We find that All-Pro status seems to
 imply being a Pro-Bowler as well. Generally, an All-Pro will not go long
 without being selected to a Pro-Bowl.
@@ -316,8 +311,6 @@ Observe:
 
 ![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-16-1.png)
 
-<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/unnamed-chunk-17-1.png' >
-
 We are impressed by the goodness of this fit. Our parameters for the
 distribution were estimated to be: (mu = 4.3805, sigma = .7168, Q =
 1.694)
@@ -332,7 +325,7 @@ For this project, our goal was to examine the statistical effects of
 career statistics, accolades and physical measurements on the career
 lengths of runningbacks in the NFL. We employed the theory of survival
 analysis, making use of such tools as the Kaplan Meier estimator and the
-Cox Proportional Hazards model. We found that there are three extremely
+Cox Proportional Hazards model. We found that there are three highly
 significant time-independent covariates which can tell us a great deal
 about an NFL running back's career length: the age at which a player was
 drafted, the player's BMI, and the player's Yards per Carry statistic.
@@ -344,12 +337,7 @@ Key Results (to be edited)
     Gamma Distribution with parameters (mu = 4.3805, sigma = .7168, Q
     = 1.694).
 
-2.  Draft Age is highly significant in predicting career length. On
-    average, the earlier a player enters the NFL, the longer it will
-    take for their athletic ability to decrease to the point of seeking
-    retirement from the league.
-
-3.  BMI is highly significant in prediction of career length, having the
+2.  BMI is highly significant in prediction of career length, having the
     largest magnitude of the three predictors in our model. Players with
     a higher computed BMI will last longer in the league. Since BMI
     loses predictive power in terms of indicating obesity when
@@ -358,18 +346,23 @@ Key Results (to be edited)
     stockier a RB's build is, the longer we can expect them to last in
     the league.
 
+3.  Draft Age is highly significant in predicting career length. On
+    average, the earlier a player enters the NFL, the longer it will
+    take for their athletic ability to decrease to the point of seeking
+    retirement from the league.
+
 4.  Yards per carry is also very significant. As an average measure, it
     is a prime indicator of how *good* an NFL RB is in their career. Of
     course, players with higher YPC can be expected to have lasted
     longer in the league.
 
-5.  All-Pro and Pro-Bowl status are also indicators of a player's
-    quality of play through their career. Perhaps trivially, players
-    with these accolades lasted longer than those who never
-    acheived them. Furthermore, we found that All-Pro was a
-    significantly better predictor of career longevity than Pro-Bowl.
+5.  All-Pro and Pro-Bowl status are indicators of a player's quality of
+    play through their career. Perhaps trivially, players with these
+    accolades lasted far longer than those who never acheived them. We
+    found that All-Pro was a significantly better predictor of career
+    longevity than Pro-Bowl.
 
-<img src='https://raw.githubusercontent.com/johnrandazzo/surv_nflrb/markdown/figure-markdown_strict/unnamed-chunk-10-1.png' >
+<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/giphy-downsized.gif' >
 
 Acknowledgments
 ---------------
