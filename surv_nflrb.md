@@ -72,9 +72,9 @@ Getting started with the .csv file
     nflrb\_data.csv and that is the name we use in the Python part. Yay!
     We are ready to plug this baby into Python.
 
-Run height\_weight.py, making sure that you have all libraries mentioned
-above installed in your Python environment. This will take a while... in
-the mean time, why not go outside?
+Run the code in RB.ipynb, making sure that you have all libraries
+mentioned above installed in your Python environment. This will take a
+while... in the mean time, why not go outside?
 
 Methodology- Analyis
 ====================
@@ -108,25 +108,6 @@ survival analysis. We also do not have a variable set to represent our
 event of interest, retirement. We need to make a few adjustments before
 we can start our analysis.
 
-    ## Warning: package 'ggplot2' was built under R version 3.3.2
-
-    ## Warning: package 'survminer' was built under R version 3.3.2
-
-    ## Loading required package: ggpubr
-
-    ## Warning: package 'ggpubr' was built under R version 3.3.2
-
-    ## 
-    ## Attaching package: 'survminer'
-
-    ## The following object is masked from 'package:ggpubr':
-    ## 
-    ##     theme_classic2
-
-    ## The following object is masked from 'package:ggplot2':
-    ## 
-    ##     %+%
-
 Tidying up:
 
     nfl$Rk <- NULL
@@ -136,9 +117,6 @@ Tidying up:
     nfl[is.na(nfl)] <- 0
     nfl <- nfl[!nfl$From == 0,]
     nfl <- nfl[!nfl$Weight == 0,]
-    nfl <- nfl[!nfl$DrAge == 20,]
-    nfl <- nfl[!nfl$DrAge == 26,]
-    nfl <- nfl[!nfl$DrAge == 25,]
 
 A few averages, and other stats:
 
@@ -211,18 +189,11 @@ additional covariates, or with a few discrete valued covariate levels.
 We make use of the ggsurv function here to create aesthetically pleasing
 survival plots:
 
-    ## Warning: Removed 1 rows containing missing values (geom_path).
-
-    ## Warning: Removed 1 rows containing missing values (geom_path).
-
-![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-9-1.png)![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-9-2.png)![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-9-3.png)![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-9-4.png)![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-9-5.png)
+![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-10-1.png)![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-10-2.png)![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-10-3.png)![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-10-4.png)![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-10-5.png)
 
 <img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/unnamed-chunk-9-1.png' >
 
 <img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/unnamed-chunk-9-2.png' >
-
-Note: bmi.cat is as follows: 0 for bottom 25th percentile, 1 for middle
-50%, 2 for top 25%
 
 <img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/unnamed-chunk-9-3.png' >
 
@@ -289,7 +260,7 @@ each probability measure are:
 A low p-value indicates that we should consider omitting the associated
 covariate.
 
-![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-11-1.png)
+![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-12-1.png)
 
 We are thrilled by these results. Our model very much aligns with the
 Proportional Hazards assumption.
@@ -300,7 +271,7 @@ Examining Our Model's Fit
 Now that we have a legitimate model in our hands, we can visualize the
 effects of different covariate levels on career survival:
 
-![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-12-1.png)![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-12-2.png)![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-12-3.png)
+![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-13-1.png)![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-13-2.png)![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-13-3.png)
 
 Bonus: All-Pro vs. Pro-Bowl
 ---------------------------
@@ -313,7 +284,7 @@ more associated to a lengthy professional career. It should be noted
 that the presence of both accolades is the best indicator of a long
 playing career.
 
-![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-14-1.png)![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-14-2.png)
+![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-15-1.png)![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-15-2.png)
 
 <img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/unnamed-chunk-12-1.png' >
 
@@ -329,10 +300,6 @@ Fitting a Distribution to Our Estimate:
 We can fit a parametric distribution to our overall survival curve.
 Observe:
 
-    nfl.fit.ret <- survfit(Surv(G,Retired)~1,data = nfl.ret)
-    f1 <- flexsurvreg(Surv(G,Retired)~1,data = nfl.ret, dist = "gengamma")
-    f1
-
     ## Call:
     ## flexsurvreg(formula = Surv(G, Retired) ~ 1, data = nfl.ret, dist = "gengamma")
     ## 
@@ -347,9 +314,7 @@ Observe:
     ## Log-likelihood = -5101.664, df = 3
     ## AIC = 10209.33
 
-    plot(f1, xlab = "Games Played", ylab = "Survival Probability", main = "Generalized Gamma fitted to Kaplan-Meier Estimate")
-
-![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-15-1.png)
+![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-16-1.png)
 
 <img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/unnamed-chunk-17-1.png' >
 
@@ -368,60 +333,9 @@ career statistics, accolades and physical measurements on the career
 lengths of runningbacks in the NFL. We employed the theory of survival
 analysis, making use of such tools as the Kaplan Meier estimator and the
 Cox Proportional Hazards model. We found that there are three extremely
-significant covariates which can tell us a great deal about an NFL
-running back's career length: the age at which a player was drafted, the
-player's BMI, and the player's Yards per Carry statistic. Additionally,
-we stratified our dataset in order to examine the effects of two yearly
-accolades as indicators of expected career length: Pro-Bowl and All-Pro
-selection. We found that a player named to All-Pro was more likely to
-have been named to the Pro Bowl, and that All-Pro is a significantly
-better indicator of player career length than Pro Bowl status.
-
-As sports fans, we found the results to be quite intuitive, but not
-particularly startling:
-
-\*A player that is younger upon entering the league has much more of his
-athletic prime in front of him and should be expected to last longer in
-the league than a player drafted at a more advanced age. Therefore,
-draft age exhibits an inverse relation with a player's career survival
-probability. Our results from our Cox Model indicate that on average,
-with all other covariates at the exact same level, that a player
-entering the league at an age X is about 119.11% as likely to retire at
-any moment compared to a player entering the league at age X-1.
-
-\*Players with higher BMI was found to have better chances of lasting
-longer in the league than those with lower ones. Although BMI loses its
-power of identifying obese or underweight individuals when computing a
-value for extremely muscular humans (such as NFL players) it is still a
-viable measure of physical density when comparing a large set of
-athletes. When comparing all of the runningbacks in our dataset, we
-found that the denser ones had better career survival, since
-runningbacks are subjected to many harsh tackles by the hands of massive
-defensive linemen and linebackers. Namely, we found that a single unit
-increase in BMI decreases the instantaneous likelihood of retirement by
-about 8%, with all other covariates held equal. We were pleased at the
-significance of this result, since we toiled for a good deal of time to
-obtain and systematically store our players' height and weight
-measurements in order to compute each one's BMI.
-
-\*Players with a higher career YPC (Yards per Carry) very trivially have
-a better chance of lasting longer in the league than those with lower
-career YPC. YPC is likely the greatest indicator of a runningback's
-quality of play. If a player has a poor average, they will lose their
-role as a starter, play less games throughout their career, and
-ultimately retire earlier. Specifically, we found that a one unit
-increase in YPC (an additional yard per carry) reduced the likelihood of
-retirement by 19% on average.
-
-\*Players selected to a Pro-Bowl but never to an All-Pro team generally
-had worse career survival. We find that players fitting this criteria
-are popular amongst fans for reasons outside of play quality, since fans
-select the Pro-Bowl teams but the All-Pro teams are chosen by the
-Associated Press, whom we can assume to be less biased in their
-selections. Although an All-Pro selection is superior in predicting a
-player having a longer career, both are nonetheless indicative of a good
-quality player that can be expected to remain in the league for a longer
-time.
+significant time-independent covariates which can tell us a great deal
+about an NFL running back's career length: the age at which a player was
+drafted, the player's BMI, and the player's Yards per Carry statistic.
 
 Key Results (to be edited)
 --------------------------
