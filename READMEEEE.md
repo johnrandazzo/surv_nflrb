@@ -30,7 +30,7 @@ runs smoothly.
     bs4
     pandas
     numpy
-    string
+    requests
 
 Be sure to pay attention to the names we use in reference, such as np
 for numpy or pd for pandas.
@@ -81,17 +81,9 @@ Getting started with the .csv file
     nflrb\_data.csv and that is the name we use in the Python part. Yay!
     We are ready to plug this baby into Python.
 
-Run the code in RB.ipynb, making sure that you have all libraries
-mentioned above installed in your Python environment. This will take a
-while... in the mean time, why not go outside?
+# Getting Started in Python
 
-
-
-
-
-# Survival Analysis for Running Backs
-
-The csv file being used in this project was extracted from the site ProFootballReference. It contains a large sample of the desired population of running backs that will be used for the survival analysis of running backs in the NFL based on several attributes. 
+We are using Python to obtain further measures of interest for the RBs in our dataset. Namely, we wish to extract each player's height and weight in order to compute their Body Mass Index. To accomplish this, we need to write a function that accesses each player's Pro-Football-Reference page, then extracts the player's height and weight by parsing the page's .html code and finding a familiar expression. We also store the player's height and weight in integer form in two new columns in our dataset.
 
 ## Importing the Required Libraries
 
@@ -558,9 +550,9 @@ nfl.isnull().sum()
 
 
 
-## Adding New Data 
+## Finding New Data
 
-When the original csv file was extracted, it contained a column that had the player's name along with a snippet of the URL that was part of their ProFootballReference page. This function returns a 2X2 matrix that contains lists of the player's name and respective ProFootballReference URL. 
+When the original .csv file was extracted, it contained a column that had the player's name along with a snippet of the URL that was part of their ProFootballReference page. This function returns a list containing the player's name and respective ProFootballReference URL. We run this function and then append the output sequentially to our existing dataset.
 
 
 ```python
@@ -746,7 +738,7 @@ nfl.head()
 
 
 
-Since the original csv file did not contain the players' height and weight, this function was created to take in a player's respective URL and parse the website to find their height and weight using BeautifulSoup4. If the info could not be found, it would be assigned a missing data value using an error exception. 
+Since the original .csv file did not contain the players' height and weight, this function was created to take in a player's respective URL and parse the website to find their height and weight using BeautifulSoup4. If the info could not be found, it would be assigned a missing data value using an error exception. 
 
 
 ```python
@@ -971,8 +963,8 @@ nfl.head()
 
 
 ```python
-## Outputted the new dataframe into a new csv file 
-nfl.to_csv("new_nflrb_data.csv")
+## Output the new dataframe into a new .csv file 
+nfl.to_csv("nfl.csv")
 ```
 
 
