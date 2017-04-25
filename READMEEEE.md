@@ -26,7 +26,7 @@ Motivation
 
 ## Runningbacks don't last very long in the NFL
 
-<iframe src="//giphy.com/embed/vZM2VRPBHmwRa?hideSocial=true" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/nfl-football-vZM2VRPBHmwRa">
+<img src="https://media.giphy.com/media/vZM2VRPBHmwRa/giphy.gif' >
 
 <img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/giphy-tumblr.gif' >
 
