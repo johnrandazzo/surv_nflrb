@@ -30,7 +30,7 @@ Motivation
 
 <img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/giphy-tumblr.gif' >
 
-<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown-strict/statistic_id240102_average-length-of-player-careers-in-the-nfl.png' >
+<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/statistic_id240102_average-length-of-player-careers-in-the-nfl.png' >
 
 Methodology- Web Scraping
 =========================
