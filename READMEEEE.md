@@ -25,9 +25,12 @@ Motivation
 ==========
 
 ## Runningbacks don't last very long in the NFL
-<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/giphy-downsized.gif' >
+
+<iframe src="//giphy.com/embed/vZM2VRPBHmwRa" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/nfl-football-vZM2VRPBHmwRa">via GIPHY</a></p>
 
 <img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/giphy-tumblr.gif' >
+
+<iframe src="//giphy.com/embed/12ediI1gBUkxrO" width="480" height="262.9482071713147" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/nfl-hit-illegal-12ediI1gBUkxrO">via GIPHY</a></p>
 
 <img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/statistic_id240102_average-length-of-player-careers-in-the-nfl.png' >
 
