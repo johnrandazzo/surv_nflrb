@@ -1154,13 +1154,12 @@ arguably the greatest pure athlete in American history:
 <img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/bojax.png' >
 
 Bo Jackson only played in three seasons, although he moonlighted as a
-star MLB player as well. His career was tragically ended by to a major
+star MLB player as well. His career was tragically ended by a catastrophic
 hip injury; the allegation is that the injury was worsened by Bo's prior
 steroid abuse. It is important to note here that statistical models such as
 KM estimates and Cox PH models are mere approximations of reality, and
-cannot in any way reliably predict real-life as it unfolds, but are more
-useful to elucidate interesting relationships between two or more
-phenomena.
+cannot in any way reliably predict real-life as it unfolds, but can be very
+useful to elucidate interesting relationships between two or more phenomena.
 
 Bonus: All-Pro vs. Pro-Bowl
 ---------------------------
