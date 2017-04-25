@@ -236,7 +236,7 @@ nfl.head()
     </tr>
   </tbody>
 </table>
-<p>5 rows Ã 24 columns</p>
+<p>5 rows x 24 columns</p>
 </div>
 
 
@@ -402,7 +402,7 @@ nfl.head()
     </tr>
   </tbody>
 </table>
-<p>5 rows Ã 22 columns</p>
+<p>5 rows x 22 columns</p>
 </div>
 
 
@@ -712,7 +712,7 @@ nfl.head()
     </tr>
   </tbody>
 </table>
-<p>5 rows Ã 23 columns</p>
+<p>5 rows x 23 columns</p>
 </div>
 
 
@@ -935,7 +935,7 @@ nfl.head()
     </tr>
   </tbody>
 </table>
-<p>5 rows Ã 25 columns</p>
+<p>5 rows x 25 columns</p>
 </div>
 
 
