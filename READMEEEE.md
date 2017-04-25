@@ -1031,7 +1031,17 @@ additional covariates, or with a few discrete valued covariate levels.
 We make use of the ggsurv function here to create aesthetically pleasing
 survival plots:
 
-![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-10-1.png)![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-10-2.png)![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-10-3.png)![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-10-4.png)![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-10-5.png)
+<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/unnamed-chunk-10-1.png' >
+
+<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/unnamed-chunk-10-2.png' >
+
+<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/unnamed-chunk-10-3.png' >
+
+<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/unnamed-chunk-10-4.png' >
+
+<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/unnamed-chunk-10-5.png' >
+
+
 
 Cox Models:
 -----------
@@ -1056,19 +1066,31 @@ $h(t,X) = h\_0(t) \* exp( \\sum\_{i = 1}^n \\beta\_i X\_i )$
 <!-- -->
 
     cox <- coxph(Surv(G,Retired)~BMI+YPC+DrAge, data = nfl.ret)
-    cox
+    summary(cox)
 
     ## Call:
     ## coxph(formula = Surv(G, Retired) ~ BMI + YPC + DrAge, data = nfl.ret)
     ## 
-    ##          coef exp(coef) se(coef)     z       p
-    ## BMI   -0.0770    0.9259   0.0144 -5.35 8.7e-08
-    ## YPC   -0.2042    0.8153   0.0299 -6.84 8.0e-12
-    ## DrAge  0.1749    1.1911   0.0434  4.03 5.5e-05
-    ## 
-    ## Likelihood ratio test=75.5  on 3 df, p=2.22e-16
-    ## n= 932, number of events= 932 
+    ##   n= 932, number of events= 932 
     ##    (82 observations deleted due to missingness)
+    ## 
+    ##           coef exp(coef) se(coef)      z Pr(>|z|)    
+    ## BMI   -0.07703   0.92586  0.01439 -5.352 8.71e-08 ***
+    ## YPC   -0.20421   0.81529  0.02986 -6.838 8.02e-12 ***
+    ## DrAge  0.17489   1.19111  0.04337  4.033 5.52e-05 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ##       exp(coef) exp(-coef) lower .95 upper .95
+    ## BMI      0.9259     1.0801    0.9001    0.9524
+    ## YPC      0.8153     1.2266    0.7689    0.8644
+    ## DrAge    1.1911     0.8396    1.0941    1.2968
+    ## 
+    ## Concordance= 0.591  (se = 0.011 )
+    ## Rsquare= 0.078   (max possible= 1 )
+    ## Likelihood ratio test= 75.55  on 3 df,   p=2.22e-16
+    ## Wald test            = 92.89  on 3 df,   p=0
+    ## Score (logrank) test = 87.74  on 3 df,   p=0
 
 Using AIC/BIC as a criterion for our model we find that our three most
 significant covariates are BMI, Yards/Carry and Draft Age. Our model is
@@ -1091,8 +1113,7 @@ each probability measure are:
 
 A low p-value indicates that we should consider omitting the associated
 covariate.
-
-![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-12-1.png)
+<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/unnamed-chunk-12-1.png' >
 
 We are thrilled by these results. Our model very much aligns with the
 Proportional Hazards assumption.
@@ -1103,8 +1124,9 @@ Examining Our Model's Fit
 Now that we have a legitimate model in our hands, we can visualize the
 effects of different covariate levels on career survival:
 
-![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-13-1.png)![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-13-2.png)![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-13-3.png)
-
+<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/unnamed-chunk-13-1.png' >
+<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/unnamed-chunk-13-2.png' >
+<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/unnamed-chunk-13-3.png' >
 Fun With Our Model: A Tale of 3 RBs
 -----------------------------------
 
@@ -1226,7 +1248,7 @@ Key Results
     found that All-Pro was a significantly better predictor of career
     longevity than Pro-Bowl.
 
-<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/giphy-downsized.gif' >
+
 
 Acknowledgments
 ---------------
