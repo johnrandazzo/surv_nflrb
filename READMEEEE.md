@@ -1105,7 +1105,35 @@ effects of different covariate levels on career survival:
 
 ![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-13-1.png)![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-13-2.png)![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-13-3.png)
 
+Fun With Our Model: A Tale of 3 RBs
+-----------------------------------
 
+We can use our model to estimate real-life career survival probability.
+Here is a Kaplan-Meier estimate for SD Chargers legend Ladainian
+Tomlinson made from our Cox model:
+![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-14-1.png)
+
+The black vertical line denotes the actual number of games LT played in
+his NFL career. For Ezekiel Elliott, we can provide an estimate for the
+probability he is still in the league after a given amount of games. He
+has only played 1 season (16 games), and given his measurements it is no
+surprise that he has made it this far:
+
+![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-15-1.png)
+
+Here is the estimated career survival probability for Bo Jackson,
+arguably the greatest pure athlete in American history:
+
+![](surv_nflrb_files/figure-markdown_strict/unnamed-chunk-16-1.png)
+
+Bo Jackson only played in three seasons, although he moonlighted as a
+star MLB player as well. His career was tragically ended due to a major
+hip injury; the allegation is that the injury was worsened by Bo's prior
+steroid abuse. It is important to note that statistical models such as
+KM estimates and Cox PH models are mere approximations of reality, and
+cannot in any way reliably predict real-life as it unfolds, but are more
+useful to elucidate interesting relationships between two or more
+phenomena.
 
 Bonus: All-Pro vs. Pro-Bowl
 ---------------------------
@@ -1158,11 +1186,12 @@ Summary and Resources
 
 For this project, our goal was to examine the statistical effects of
 career statistics, accolades and physical measurements on the career
-lengths of runningbacks in the NFL. We employed the theory of survival
-analysis, making use of such tools as the Kaplan Meier estimator and the
-Cox Proportional Hazards model. We found that there are three highly
-significant time-independent covariates which can tell us a great deal
-about an NFL running back's career length: the age at which a player was
+lengths of runningbacks in the NFL. Upon obtaining the dataset via
+Python methods, we switched to R and implemented theoretical tools of survival
+analysis such as the Kaplan Meier estimator and the Cox Proportional
+Hazards model. We found that there are three highly significant and
+time-independent covariates which can tell us a great deal about an NFL
+running back's potential career length: the age at which a player was
 drafted, the player's BMI, and the player's Yards per Carry statistic.
 
 Key Results
@@ -1172,7 +1201,7 @@ Key Results
     Gamma Distribution with parameters (mu = 4.3805, sigma = .7168, Q
     = 1.694).
 
-2.  BMI is highly significant in prediction of career length, having the
+2.  BMI is highly significant in predicting career length, having the
     largest magnitude of the three predictors in our model. Players with
     a higher computed BMI will last longer in the league. Since BMI
     loses predictive power in terms of indicating obesity when
