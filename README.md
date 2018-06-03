@@ -26,11 +26,11 @@ Motivation
 
 ## Runningbacks don't last very long in the NFL
 
-<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/giphy%20(1).gif' >
+<img src='https://github.com/johnrandazzo/surv_nflrb/blob/master/figure-markdown_strict/giphy%20(1).gif' >
 
-<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/giphy-tumblr.gif' >
+<img src='https://github.com/johnrandazzo/surv_nflrb/blob/master/figure-markdown_strict/giphy-tumblr.gif' >
 
-<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/statistic_id240102_average-length-of-player-careers-in-the-nfl.png' >
+<img src='https://github.com/johnrandazzo/surv_nflrb/blob/master/figure-markdown_strict/statistic_id240102_average-length-of-player-careers-in-the-nfl.png' >
 
 Methodology- Web Scraping
 =========================
@@ -1032,15 +1032,15 @@ additional covariates, or with a few discrete valued covariate levels.
 We make use of the ggsurv function here to create aesthetically pleasing
 survival plots:
 
-<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/unnamed-chunk-10-1.png' >
+<img src='https://github.com/johnrandazzo/surv_nflrb/blob/master/figure-markdown_strict/unnamed-chunk-10-1.png' >
 
-<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/unnamed-chunk-10-2.png' >
+<img src='https://github.com/johnrandazzo/surv_nflrb/blob/master/figure-markdown_strict/unnamed-chunk-10-2.png' >
 
-<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/unnamed-chunk-10-3.png' >
+<img src='https://github.com/johnrandazzo/surv_nflrb/blob/master/figure-markdown_strict/unnamed-chunk-10-3.png' >
 
-<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/unnamed-chunk-10-4.png' >
+<img src='https://github.com/johnrandazzo/surv_nflrb/blob/master/figure-markdown_strict/unnamed-chunk-10-4.png' >
 
-<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/unnamed-chunk-10-5.png' >
+<img src='https://github.com/johnrandazzo/surv_nflrb/blob/master/figure-markdown_strict/unnamed-chunk-10-5.png' >
 
 
 
@@ -1114,7 +1114,7 @@ each probability measure are:
 
 A low p-value indicates that we should consider omitting the associated
 covariate.
-<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/unnamed-chunk-12-1.png' >
+<img src='https://github.com/johnrandazzo/surv_nflrb/blob/master/figure-markdown_strict/unnamed-chunk-12-1.png' >
 
 We are thrilled with these results. Our model very much aligns with the
 Proportional Hazards assumption.
@@ -1125,9 +1125,9 @@ Examining Our Model's Fit
 Now that we have a legitimate model in our hands, we can visualize the
 effects of different covariate levels on career survival:
 
-<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/bmi.png' >
-<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/npc.png' >
-<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/drage.png' >
+<img src='https://github.com/johnrandazzo/surv_nflrb/blob/master/figure-markdown_strict/bmi.png' >
+<img src='https://github.com/johnrandazzo/surv_nflrb/blob/master/figure-markdown_strict/npc.png' >
+<img src='https://github.com/johnrandazzo/surv_nflrb/blob/master/figure-markdown_strict/drage.png' >
 
 Fun With Our Model: A Tale of 3 RBs
 -----------------------------------
@@ -1136,7 +1136,7 @@ We can use our model to estimate real-life career survival probability.
 Here is a Kaplan-Meier estimate for SD Chargers legend Ladainian
 Tomlinson made from our Cox model:
 
-<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/lt.png' >
+<img src='https://github.com/johnrandazzo/surv_nflrb/blob/master/figure-markdown_strict/lt.png' >
 
 The black vertical line denotes the actual number of games LT played in
 his NFL career. 
@@ -1146,12 +1146,12 @@ probability he is still in the league after a given amount of games. He
 has only played 1 season (16 games), and given his measurements it is no
 surprise that he has made it this far:
 
-<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/zeke.png' >
+<img src='https://github.com/johnrandazzo/surv_nflrb/blob/master/figure-markdown_strict/zeke.png' >
 
 Here is the estimated career survival probability for Bo Jackson,
 arguably the greatest pure athlete in American history:
 
-<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/bojax.png' >
+<img src='https://github.com/johnrandazzo/surv_nflrb/blob/master/figure-markdown_strict/bojax.png' >
 
 Bo Jackson only played in three seasons, although he moonlighted as a
 star MLB player as well. His career was tragically ended by a catastrophic
@@ -1173,8 +1173,8 @@ that the presence of both accolades is the best indicator of a long
 playing career.
 
 
-<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/appb1.png' >
-<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/appb2.png' >
+<img src='https://github.com/johnrandazzo/surv_nflrb/blob/master/figure-markdown_strict/appb1.png' >
+<img src='https://github.com/johnrandazzo/surv_nflrb/blob/master/figure-markdown_strict/appb2.png' >
 
 The second plot is incomplete. We find that All-Pro status seems to
 imply being a Pro-Bowler as well. Generally, an All-Pro will not go long
@@ -1200,7 +1200,7 @@ Observe:
     ## Log-likelihood = -5101.664, df = 3
     ## AIC = 10209.33
 
-<img src='https://github.com/johnrandazzo/surv_nflrb/blob/markdown/figure-markdown_strict/unnamed-chunk-16-1.png' >
+<img src='https://github.com/johnrandazzo/surv_nflrb/blob/master/figure-markdown_strict/unnamed-chunk-16-1.png' >
 
 We are impressed by the goodness of this fit. Our parameters for the
 distribution were estimated to be: (mu = 4.3805, sigma = .7168, Q =
